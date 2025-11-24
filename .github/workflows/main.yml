@@ -1,0 +1,33 @@
+name: CI Pipeline Tugas TBP
+
+on:
+  push:
+    branches: ["main"]
+
+jobs:
+  build-test-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Ambil Kode dari GitHub
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      # 2. Siapkan Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      # 3. Install semua alat (termasuk axios & eslint)
+      - name: Install Dependencies
+        run: npm install
+
+      # 4. Jalankan Linter (Sesuai tugas: Cek Kualitas Kode)
+      - name: Run Linter
+        run: npm run lint --if-present
+
+      # 5. Jalankan Unit Test (Sesuai tugas: Cek Test)
+      - name: Run Unit Test
+        run: npm run test
